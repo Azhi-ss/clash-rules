@@ -7,7 +7,7 @@
 
 ```
 GitHub 仓库 (rules/*.yaml)
-        │  HTTP 拉取（jsDelivr CDN，内核按 interval 定时更新）
+        │  HTTP 拉取（GitHub raw 实时更新，经代理节点下载；jsDelivr 作备选）
         ▼
 mihomo rule-providers（按策略拆成 5 个集合）
         │  RULE-SET 引用（策略组名在各设备本地映射）
