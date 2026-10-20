@@ -52,6 +52,27 @@ mihomo 的规则是**自上而下逐条匹配、命中即停**，脚本把 5 条
   或者干脆把映射都指向各订阅通用的默认代理组。
 - 想查看当前生效的组名：`Verge → 代理页`，或 mihomo API `GET /proxies`。
 
+### 本质：任何机场都只有两个通用出口
+
+- **`DIRECT`（直连）**：内核内置，任何机场都存在，不是策略组。
+- **一个“总代理组”**：真正装着所有节点的那个组。LinkCube 里叫 `Proxies`（56 个节点）；
+  其他机场常见叫法：`Proxies` / `Proxy` / `节点选择` / `🚀 节点选择` / `代理`。
+- 像 `Google / Steam / Netflix` 这些细分组，通常只是“预先筛选过的子组”，最终仍把流量交给总代理组。
+
+所以有两套映射可选：
+
+```js
+// 精细模式（订阅里有 Google/Steam 等细分组时，当前 LinkCube 用这个）
+const POLICY = { direct: "DIRECT", windows: "DIRECT", google: "Google",
+                 proxy: "Proxies", steam: "Steam" };
+
+// 万能模式（任何机场都能用：不管它有什么细分组，需要代理的全部走总代理组）
+const POLICY = { direct: "DIRECT", windows: "DIRECT", google: "Proxies",
+                 proxy: "Proxies", steam: "Proxies" };   // 把 "Proxies" 换成该机场的总代理组名
+```
+
+> 新机器/新机场若不确定组名，先用「万能模式」（直连 + 总代理组）保证全部生效，之后想要精细分流再按实际细分组调整。
+
 ## 关于 “classical”（规则集格式）
 
 配置里的 `behavior: classical` 是 **mihomo 内核**的参数（Clash Verge 界面里看不到这个词）。
