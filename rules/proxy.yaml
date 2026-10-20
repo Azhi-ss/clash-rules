@@ -1,0 +1,14 @@
+# 代理规则集：需要出海的开发/科研服务，统一走客户端的默认代理策略组（如 Proxies）
+# behavior: classical
+payload:
+  # ---- AI / 模型 ----
+  - DOMAIN-SUFFIX,huggingface.co
+  - DOMAIN-SUFFIX,hf.co
+  - DOMAIN-SUFFIX,cursor.com
+  # ---- 容器 / 镜像 ----
+  - DOMAIN-SUFFIX,docker.com
+  - DOMAIN-SUFFIX,docker.io
+  - DOMAIN-SUFFIX,ghcr.io
+  # ---- GitHub 社区/开发域名（github.com 本身一般由机场规则兜底）----
+  - DOMAIN-SUFFIX,github.dev
+  - DOMAIN-SUFFIX,github.community

@@ -1,0 +1,4 @@
+# Steam 规则集：统一走客户端的 Steam 策略组（策略组名在各客户端本地映射）
+# behavior: classical
+payload:
+  - DOMAIN-SUFFIX,steamcontent.com

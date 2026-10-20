@@ -1,0 +1,56 @@
+# =====================================================================
+# 原生 mihomo / Mihomo Party / ClashX Meta 等客户端的配置片段
+# 合并进自己的 config.yaml（或对应客户端的覆写配置），把 USER/REPO 改掉。
+# 注意：RULE-SET 的策略组名必须与自己订阅里的组名一致。
+# =====================================================================
+
+rule-providers:
+  online-direct:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/direct.yaml
+    interval: 86400
+    proxy: Proxies          # 国内拉取兜底；能直连 CDN 可删掉或改为 DIRECT
+    path: ./providers/online-direct.yaml
+  online-windows:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/windows-direct.yaml
+    interval: 86400
+    proxy: Proxies
+    path: ./providers/online-windows.yaml
+  online-google:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/google.yaml
+    interval: 86400
+    proxy: Proxies
+    path: ./providers/online-google.yaml
+  online-proxy:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/proxy.yaml
+    interval: 86400
+    proxy: Proxies
+    path: ./providers/online-proxy.yaml
+  online-steam:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/steam.yaml
+    interval: 86400
+    proxy: Proxies
+    path: ./providers/online-steam.yaml
+
+rules:
+  # 放在 rules 最前面；macOS/Linux 删除 windows 那一行
+  - RULE-SET,online-windows,DIRECT
+  - RULE-SET,online-direct,DIRECT
+  - RULE-SET,online-google,Google
+  - RULE-SET,online-proxy,Proxies
+  - RULE-SET,online-steam,Steam
+  # …原有规则接在后面…

@@ -1,0 +1,7 @@
+# Windows 进程直连规则集（仅 Windows 生效；macOS/Linux 客户端不要引用本集合）
+# behavior: classical —— 策略由客户端 RULE-SET 行统一指定（DIRECT）
+payload:
+  - PROCESS-NAME,ImeService.exe
+  - PROCESS-NAME,DoubaoImeSettings.exe
+  - PROCESS-NAME,SettingsLauncher.exe
+  - PROCESS-NAME,UpdateWorker.exe
