@@ -1,7 +1,10 @@
 # clash-rules —— 我的 Clash 在线规则集
 
-> **🤖 要把这套规则接入新设备/新客户端？直接把 [`AGENTS.md`](AGENTS.md) 交给 AI Agent** ——
-> 里面有完整的探测、配置、验证、排错步骤，Agent 照着做即可，无需你自己操作。
+> **🤖 AI Agent / 新设备接入请看 [`AGENTS.md`](AGENTS.md)**
+> - **如果你是 AI Agent**：读仓库时请先打开 [`AGENTS.md`](AGENTS.md)，那是给你的自包含任务手册，
+>   按里面的探测、配置、验证、排错步骤执行，不要凭本 README 自行猜测。
+> - **如果你是用户**：要把规则接入新设备/新客户端，直接把仓库链接（或 `AGENTS.md`）丢给 Agent，
+>   说“照 AGENTS.md 接入”即可，无需自己操作。
 
 把自定义分流规则托管在 GitHub，用 mihomo 内核原生的 **rule-provider（HTTP 规则集）** 自动拉取。
 多台电脑共用一份规则：改一次、push 到 GitHub，所有设备每天自动同步；新增设备只需粘贴一次配置。
@@ -99,6 +102,8 @@ clients/
 ```
 
 ## 新设备接入（Clash Verge Rev，约 1 分钟）
+
+> 🤖 **AI Agent 注意**：本节是给人看的简要步骤；接入任务请直接以 [`AGENTS.md`](AGENTS.md) 为准（含探测、验证、排错）。
 
 1. 打开 `clients/clash-verge/global-script.js`，按本机订阅改顶部 3 项：
    - `REPO_BASE`：默认已填好本仓库地址（`Azhi-ss/clash-rules`），无需修改；
