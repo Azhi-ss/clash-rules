@@ -36,6 +36,22 @@ mihomo 的规则是**自上而下逐条匹配、命中即停**，脚本把 5 条
 - 若同一域名在两边都有且结论冲突（机场让走代理、你让直连），**在线规则优先**（因为排在最前）。
 - 本仓库是“增量覆盖层”，只放你想自己掌控的规则；机场订阅更新它的规则库也不影响你这份。
 
+## 换机场 / 换订阅（规则不绑定任何机场）
+
+本仓库的规则文件**只描述“匹配什么域名”，不含任何策略组名**，因此和具体机场（LinkCube 或其他）完全解耦：
+换机场、换订阅，**仓库里的 `rules/*.yaml` 一个字都不用改**；只需要在每台机器的 `global-script.js` 顶部改 `POLICY` 映射。
+
+- 策略组名来自**当前订阅**：在 Verge「代理」页能看到（例如 LinkCube 有
+  `Apple / Bahamut / Bilibili / Disney / Final / Google / HK / JP / Microsoft / Netflix / OpenAI /
+  PayPal / Proxies / SG / Spotify / Steam / Telegram / US / YouTube` 等 22 个组）。
+- `DIRECT` 是内核内置的，永远存在；其余 `Google / Proxies / Steam` 必须是订阅里真实存在的组名。
+- 新机场若没有同名组（比如没有 `Steam`，或叫 `游戏服务`、`🤖 AI`），把 `POLICY` 里对应的值改成它实际的组名即可；
+  实在没有对应细分组，就指向它的默认代理组（常见叫法：`Proxies` / `Proxy` / `节点选择` / `🚀 节点选择`）。
+- **重要**：`RULE-SET` 引用了不存在的组名会导致内核校验失败，所以换到新机场后务必对照「代理」页把组名填对。
+- 全局脚本对 Verge 里的所有订阅生效；若你在多个机场订阅之间切换，确保它们都包含 `POLICY` 里引用的组名，
+  或者干脆把映射都指向各订阅通用的默认代理组。
+- 想查看当前生效的组名：`Verge → 代理页`，或 mihomo API `GET /proxies`。
+
 ## 关于 “classical”（规则集格式）
 
 配置里的 `behavior: classical` 是 **mihomo 内核**的参数（Clash Verge 界面里看不到这个词）。
