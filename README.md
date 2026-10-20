@@ -1,5 +1,8 @@
 # clash-rules —— 我的 Clash 在线规则集
 
+> **🤖 要把这套规则接入新设备/新客户端？直接把 [`AGENTS.md`](AGENTS.md) 交给 AI Agent** ——
+> 里面有完整的探测、配置、验证、排错步骤，Agent 照着做即可，无需你自己操作。
+
 把自定义分流规则托管在 GitHub，用 mihomo 内核原生的 **rule-provider（HTTP 规则集）** 自动拉取。
 多台电脑共用一份规则：改一次、push 到 GitHub，所有设备每天自动同步；新增设备只需粘贴一次配置。
 
