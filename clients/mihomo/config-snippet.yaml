@@ -9,7 +9,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/direct.yaml
+    url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/direct.yaml
     interval: 86400
     proxy: Proxies          # 国内拉取兜底；能直连 CDN 可删掉或改为 DIRECT
     path: ./providers/online-direct.yaml
@@ -17,7 +17,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/windows-direct.yaml
+    url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/windows-direct.yaml
     interval: 86400
     proxy: Proxies
     path: ./providers/online-windows.yaml
@@ -25,7 +25,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/google.yaml
+    url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/google.yaml
     interval: 86400
     proxy: Proxies
     path: ./providers/online-google.yaml
@@ -33,7 +33,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/proxy.yaml
+    url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/proxy.yaml
     interval: 86400
     proxy: Proxies
     path: ./providers/online-proxy.yaml
@@ -41,7 +41,7 @@ rule-providers:
     type: http
     behavior: classical
     format: yaml
-    url: https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/steam.yaml
+    url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/steam.yaml
     interval: 86400
     proxy: Proxies
     path: ./providers/online-steam.yaml

@@ -6,8 +6,9 @@
 // =====================================================================
 
 // ===== 按需修改这 3 项 =====
-// 规则文件 URL 前缀（jsDelivr CDN，国内可访问性较好；备选见 README）
-const REPO_BASE = "https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules";
+// 规则文件 URL 前缀（raw 实时同步；经 DOWNLOAD_PROXY 代理拉取，国内也可用）
+// 备选 CDN（国内直连更快但有缓存延迟）：https://gcore.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules
+const REPO_BASE = "https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules";
 // 内核“下载/更新规则集”时走哪个策略组（保证国内能拉到；能直连 CDN 可改为 "DIRECT"）
 const DOWNLOAD_PROXY = "Proxies";
 // 每个规则集映射到本机订阅里的策略组名（不同机场的组名可能不同，以自己订阅为准）

@@ -61,11 +61,11 @@ git add rules/ && git commit -m "rules: xxx" && git push
 
 ## 国内拉取说明
 
-- 默认 URL 用 jsDelivr CDN：`https://cdn.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/xxx.yaml`，
-  并在 provider 里设置 `proxy: Proxies`，让内核经代理下载（双保险）。
-- 下载失败时内核会继续使用上一次的本地缓存（`providers/online-*.yaml`），不会断网。
-- 备用 URL（任选其一替换 `REPO_BASE`）：
-  - GitHub 原始地址：`https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules`
-  - Fastly 镜像：`https://fastly.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules`
+- 默认 URL 用 GitHub raw（`https://raw.githubusercontent.com/...`，规则更新**实时生效**），
+  并在 provider 里设置 `proxy: Proxies`，让内核经代理节点下载，国内稳定。
+- 下载失败时内核会继续使用上一次的本地缓存（`providers/online-*.yaml`），不会断网；
+  首次成功拉取后，即使断网/限流也不影响分流。
+- 备用 URL（直连 CDN，无需代理，但有几分钟级缓存延迟，任选其一替换 `REPO_BASE`）：
   - GCore 镜像：`https://gcore.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules`
+  - Fastly 镜像：`https://fastly.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules`
 - 仓库必须**公开**（rule-provider 不支持交互式登录；私有仓库需自行配置带 Authorization header 的反代）。
