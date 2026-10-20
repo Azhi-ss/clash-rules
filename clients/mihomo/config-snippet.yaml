@@ -1,7 +1,10 @@
 # =====================================================================
-# 原生 mihomo / Mihomo Party / ClashX Meta 等客户端的配置片段
-# 合并进自己的 config.yaml（或对应客户端的覆写配置），把 USER/REPO 改掉。
-# 注意：RULE-SET 的策略组名必须与自己订阅里的组名一致。
+# 原生 mihomo / Mihomo Party / ClashX Meta / FlClash 等客户端配置片段
+# 用法：把下面的 rule-providers 块并入主配置，把 5 条 RULE-SET 放到 rules 最前面。
+# 策略组名（Google/Proxies/Steam）必须是本订阅里真实存在的组；
+# 没有对应细分组就统一改成总代理组（如 Proxies / 节点选择）。
+# macOS/Linux：删除 online-windows 那一行（PROCESS-NAME 仅 Windows 生效）。
+# 国内拉不到就把 url 换成 https://gcore.jsdelivr.net/gh/Azhi-ss/clash-rules@main/rules/<file>
 # =====================================================================
 
 rule-providers:
@@ -11,7 +14,7 @@ rule-providers:
     format: yaml
     url: https://raw.githubusercontent.com/Azhi-ss/clash-rules/main/rules/direct.yaml
     interval: 86400
-    proxy: Proxies          # 国内拉取兜底；能直连 CDN 可删掉或改为 DIRECT
+    proxy: Proxies
     path: ./providers/online-direct.yaml
   online-windows:
     type: http

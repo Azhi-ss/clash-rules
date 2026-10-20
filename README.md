@@ -47,16 +47,12 @@ mihomo 的规则是**自上而下逐条匹配、命中即停**，脚本把 5 条
 本仓库的规则文件**只描述“匹配什么域名”，不含任何策略组名**，因此和具体机场（LinkCube 或其他）完全解耦：
 换机场、换订阅，**仓库里的 `rules/*.yaml` 一个字都不用改**；只需要在每台机器的 `global-script.js` 顶部改 `POLICY` 映射。
 
-- 策略组名来自**当前订阅**：在 Verge「代理」页能看到（例如 LinkCube 有
-  `Apple / Bahamut / Bilibili / Disney / Final / Google / HK / JP / Microsoft / Netflix / OpenAI /
-  PayPal / Proxies / SG / Spotify / Steam / Telegram / US / YouTube` 等 22 个组）。
-- `DIRECT` 是内核内置的，永远存在；其余 `Google / Proxies / Steam` 必须是订阅里真实存在的组名。
-- 新机场若没有同名组（比如没有 `Steam`，或叫 `游戏服务`、`🤖 AI`），把 `POLICY` 里对应的值改成它实际的组名即可；
-  实在没有对应细分组，就指向它的默认代理组（常见叫法：`Proxies` / `Proxy` / `节点选择` / `🚀 节点选择`）。
-- **重要**：`RULE-SET` 引用了不存在的组名会导致内核校验失败，所以换到新机场后务必对照「代理」页把组名填对。
-- 全局脚本对 Verge 里的所有订阅生效；若你在多个机场订阅之间切换，确保它们都包含 `POLICY` 里引用的组名，
-  或者干脆把映射都指向各订阅通用的默认代理组。
-- 想查看当前生效的组名：`Verge → 代理页`，或 mihomo API `GET /proxies`。
+- 策略组名来自**当前订阅**，在 Verge「代理」页能看到（例如 LinkCube 有 `Google / Proxies / Steam` 等 22 个组）。
+- `DIRECT` 是内核内置的、永远存在；`Google / Proxies / Steam` 等必须是订阅里**真实存在**的组名——
+  引用不存在的组名会导致内核校验失败。
+- 新机场没有同名细分组（比如没有 `Steam`，或叫 `游戏服务`、`🤖 AI`），把 `POLICY` 里对应的值改成实际组名，
+  或直接指向总代理组（常见叫法：`Proxies` / `Proxy` / `节点选择` / `🚀 节点选择`）。
+- 在多个机场订阅间切换时，确保每个订阅都含 `POLICY` 引用的组名，或干脆都指向通用总代理组。
 
 ### 本质：任何机场都只有两个通用出口
 
@@ -105,27 +101,21 @@ clients/
 
 > 🤖 **AI Agent 注意**：本节是给人看的简要步骤；接入任务请直接以 [`AGENTS.md`](AGENTS.md) 为准（含探测、验证、排错）。
 
-1. 打开 `clients/clash-verge/global-script.js`，按本机订阅改顶部 3 项：
-   - `REPO_BASE`：默认已填好本仓库地址（`Azhi-ss/clash-rules`），无需修改；
-   - `DOWNLOAD_PROXY`：下载规则集用的代理组名（国内建议保留 `Proxies`）；
-   - `POLICY`：各集合映射到自己订阅里的策略组名（在 Verge「代理」页能看到组名）。
+1. 打开 `clients/clash-verge/global-script.js`：只需核对顶部的 `POLICY` 组名（在 Verge「代理」页对照）；
+   `REPO_BASE` 已填好无需改，`DOWNLOAD_PROXY` 国内建议保留 `Proxies`。
 2. Verge → 设置/订阅页 → 编辑**全局扩展脚本 (Script)** → 全文粘贴 → 保存。
 3. 切一下订阅或重启内核，日志中无 provider 报错即可。
-4. 验证：内核日志/API 里 5 个 `online-*` 集合均加载成功；访问 google.com 应显示命中 `RULE-SET,online-google`。
-5. （macOS / Linux）删掉脚本里 `RULE-SET,online-windows,...` 那一行——进程规则（`PROCESS-NAME`）是 Windows 专属，
-   Mac 上永远匹配不到（留着也不会报错，只是会白拉一个 4 条规则的小文件）。
+4. 验证：内核日志/API 里 `online-*` 集合均加载成功（Windows 5 个、Mac/Linux 4 个）；访问 google.com 应命中 `RULE-SET,online-google`。
+5. macOS / Linux：删掉脚本里 `RULE-SET,online-windows,...` 那一行（进程规则是 Windows 专属；不删也无害）。
 
-> 非 Verge 的 mihomo 系客户端，参照 `clients/mihomo/config-snippet.yaml`。
+> 非 Verge 的 mihomo 系客户端（Mihomo Party / ClashX Meta / FlClash 等），用 `clients/mihomo/config-snippet.yaml`。
 
-### macOS / Linux 接入说明
+### macOS / Linux
 
-- **完全支持**：Clash Verge Rev 是跨平台应用（Windows / macOS / Linux），Mac 端（Intel 和 Apple Silicon 都有 .dmg）
-  用的是同一个 mihomo 内核，「全局扩展脚本」入口与 Windows 完全相同，粘贴脚本、保存即可。
-- 规则集里除了 `windows-direct.yaml`（Windows 进程名）之外，其余 4 个文件（域名 + IP 段）都是跨平台的，Mac 照常用。
-- 操作差异只有一个：按上面第 5 步删掉 online-windows 那一行（或保留，无害）。
-- `path: ./providers/online-*.yaml` 是相对路径，Mac/Linux 上内核会自动放到各自的配置目录，不用改。
-- 若 Mac 上用的是**另一个机场订阅**，记得核对 `POLICY` 里的策略组名（在「代理」页看）；如果和本机是同一个机场订阅，直接用默认值。
-- 不用 Verge 的话：macOS 可选 **ClashX Meta / Mihomo Party**，参照 `clients/mihomo/config-snippet.yaml` 手动加 provider 与规则。
+- Clash Verge Rev 跨平台（Intel / Apple Silicon 都有），入口和操作与 Windows 完全一样；
+  除 windows-direct 外，其余 4 个规则集（域名 + IP 段）天然跨平台。
+- 唯一改动：删 online-windows 那一行（见上）。`path` 是相对路径，内核会自动放到本机配置目录。
+- 若用的是不同机场，核对 `POLICY` 组名（见上文「换机场」）。
 
 ## 更新规则（日常工作流）
 
