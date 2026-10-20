@@ -67,9 +67,20 @@ clients/
 2. Verge → 设置/订阅页 → 编辑**全局扩展脚本 (Script)** → 全文粘贴 → 保存。
 3. 切一下订阅或重启内核，日志中无 provider 报错即可。
 4. 验证：内核日志/API 里 5 个 `online-*` 集合均加载成功；访问 google.com 应显示命中 `RULE-SET,online-google`。
-5. macOS / Linux：删掉脚本里 `RULE-SET,online-windows,...` 那一行（进程规则是 Windows 专属）。
+5. （macOS / Linux）删掉脚本里 `RULE-SET,online-windows,...` 那一行——进程规则（`PROCESS-NAME`）是 Windows 专属，
+   Mac 上永远匹配不到（留着也不会报错，只是会白拉一个 4 条规则的小文件）。
 
 > 非 Verge 的 mihomo 系客户端，参照 `clients/mihomo/config-snippet.yaml`。
+
+### macOS / Linux 接入说明
+
+- **完全支持**：Clash Verge Rev 是跨平台应用（Windows / macOS / Linux），Mac 端（Intel 和 Apple Silicon 都有 .dmg）
+  用的是同一个 mihomo 内核，「全局扩展脚本」入口与 Windows 完全相同，粘贴脚本、保存即可。
+- 规则集里除了 `windows-direct.yaml`（Windows 进程名）之外，其余 4 个文件（域名 + IP 段）都是跨平台的，Mac 照常用。
+- 操作差异只有一个：按上面第 5 步删掉 online-windows 那一行（或保留，无害）。
+- `path: ./providers/online-*.yaml` 是相对路径，Mac/Linux 上内核会自动放到各自的配置目录，不用改。
+- 若 Mac 上用的是**另一个机场订阅**，记得核对 `POLICY` 里的策略组名（在「代理」页看）；如果和本机是同一个机场订阅，直接用默认值。
+- 不用 Verge 的话：macOS 可选 **ClashX Meta / Mihomo Party**，参照 `clients/mihomo/config-snippet.yaml` 手动加 provider 与规则。
 
 ## 更新规则（日常工作流）
 
