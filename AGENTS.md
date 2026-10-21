@@ -3,9 +3,12 @@
 > 当用户要求“把这台机器/这个客户端接入在线规则集”“在新电脑配置规则”“增改分流规则”“排查规则不生效”时按本文件执行。
 > 概念解释（规则顺序、classical、换机场原理）面向用户写在 [README.md](README.md)；本文件只讲怎么动手、怎么验证。
 >
-> **按需技能（遇到对应需求才读，平时不用打开）**：
-> - 用户要让 **UU 远程（网易 GameViewer / uuyc）或同类远控软件（ToDesk / 向日葵 / RustDesk）不走代理、远控卡顿/连不上** →
->   读 [`skills/uu-remote/SKILL.md`](skills/uu-remote/SKILL.md)（P2P 纯 IP 必须按进程直连，含已验证进程名与验证步骤）。
+> **Skills 按需索引（`skills/` 目录）**：这里只列“什么需求 → 打开哪个文件”，**命中需求才读对应的 SKILL.md，不必全看**；
+> 具体步骤都在各 SKILL.md 内，本手册不展开。以后新增技能，只需在这张表加一行。
+>
+> | 命中需求 | 打开 |
+> |---|---|
+> | 让 **UU 远程**（网易 GameViewer/uuyc）或同类远控（ToDesk/向日葵/RustDesk）不走代理、远控卡顿/连不上、P2P 流量被送进代理 | [`skills/uu-remote/SKILL.md`](skills/uu-remote/SKILL.md) |
 
 ## 1. 这是什么
 
@@ -59,11 +62,7 @@ mihomo（Clash.Meta）内核的 `rule-provider` HTTP 规则集，规则托管在
 - 归属：国内直连→`direct.yaml`；Google→`google.yaml`；出海→`proxy.yaml`；Steam→`steam.yaml`；Windows 进程→`windows-direct.yaml`。
 - 格式：`payload:` 下每行 `类型,匹配值[,附加]`（`DOMAIN-SUFFIX,example.com` / `IP-CIDR,10.0.0.0/8,no-resolve` / `PROCESS-NAME,foo.exe`），不带策略名。
 - **覆盖整个域名族**（主域 + CDN + API + 静态 + 别名），不要只加单个主机；不同集合间不要重复。
-- **远程桌面 / P2P / 隧道类软件**（网易 UU 远程=GameViewer、ToDesk、向日葵、RustDesk 等）**不要只加域名**：
-  画面与隧道是纯 IP 的 P2P 直连、没有域名，海外对端还会被 GeoIP 送进代理。必须把**全部联网 exe**
-  （主控、被控 Server、系统 Service、Launcher、P2P 隧道/mux、cli）用 `PROCESS-NAME` 加进 `windows-direct.yaml`。
-  真实进程名以安装目录和 `GET /connections` 里的 `metadata.process` 为准；加完用 `DELETE /connections/{id}`
-  断开旧连接（或重启该软件），确认新连接命中 `RuleSet online-windows`——进程规则只对新连接生效。
+- **远程桌面 / P2P 类软件（UU 远程、ToDesk、向日葵等）的进程直连不在本手册展开**：见顶部 **Skills 按需索引**，打开对应 SKILL.md。
 - `git add rules/ && git commit -m "rules: …" && git push`；客户端 24h 内自动更新，急需则刷新 provider/重启内核。
 - 仓库公开，**禁止写敏感信息**，IP 段只允许内网/保留或公开网段。
 
