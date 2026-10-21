@@ -97,6 +97,20 @@ clients/
 └── mihomo/config-snippet.yaml     # 原生 mihomo / Mihomo Party / ClashX Meta 片段
 ```
 
+## 强制直连的软件（Windows 进程规则）
+
+`windows-direct.yaml`（仅 Windows 引用）按**进程名**把下列软件强制直连，与它们连什么 IP 无关：
+
+- **豆包输入法 / 系统设置**：本地组件，走代理会异常。
+- **网易 UU 远程**（网易代号 GameViewer，含 `GameViewer.exe`、被控端 `GameViewerServer.exe`、系统服务、
+  P2P 隧道 `uuyc-mux.exe` 等进程）：远程桌面和端口映射是 **P2P 直连**，画面/隧道流量走**纯 IP、没有域名**，
+  域名规则管不到；对端还可能是海外 IP，按 GeoIP 会被送进代理，导致卡顿或连不上。按进程直连后，
+  **主控端和被控端都不走代理**。
+
+为什么这类软件不能只加域名：P2P 流量是 IP 直连，没有域名可匹配。**同类远控软件（ToDesk、向日葵、RustDesk 等）
+同理处理**——把联网 exe 用 `PROCESS-NAME` 加进 `windows-direct.yaml`，主控端和被控端都要覆盖；
+改完重启该软件（规则只对新连接生效）。
+
 ## 新设备接入（Clash Verge Rev，约 1 分钟）
 
 > 🤖 **AI Agent 注意**：本节是给人看的简要步骤；接入任务请直接以 [`AGENTS.md`](AGENTS.md) 为准（含探测、验证、排错）。

@@ -55,6 +55,11 @@ mihomo（Clash.Meta）内核的 `rule-provider` HTTP 规则集，规则托管在
 - 归属：国内直连→`direct.yaml`；Google→`google.yaml`；出海→`proxy.yaml`；Steam→`steam.yaml`；Windows 进程→`windows-direct.yaml`。
 - 格式：`payload:` 下每行 `类型,匹配值[,附加]`（`DOMAIN-SUFFIX,example.com` / `IP-CIDR,10.0.0.0/8,no-resolve` / `PROCESS-NAME,foo.exe`），不带策略名。
 - **覆盖整个域名族**（主域 + CDN + API + 静态 + 别名），不要只加单个主机；不同集合间不要重复。
+- **远程桌面 / P2P / 隧道类软件**（网易 UU 远程=GameViewer、ToDesk、向日葵、RustDesk 等）**不要只加域名**：
+  画面与隧道是纯 IP 的 P2P 直连、没有域名，海外对端还会被 GeoIP 送进代理。必须把**全部联网 exe**
+  （主控、被控 Server、系统 Service、Launcher、P2P 隧道/mux、cli）用 `PROCESS-NAME` 加进 `windows-direct.yaml`。
+  真实进程名以安装目录和 `GET /connections` 里的 `metadata.process` 为准；加完用 `DELETE /connections/{id}`
+  断开旧连接（或重启该软件），确认新连接命中 `RuleSet online-windows`——进程规则只对新连接生效。
 - `git add rules/ && git commit -m "rules: …" && git push`；客户端 24h 内自动更新，急需则刷新 provider/重启内核。
 - 仓库公开，**禁止写敏感信息**，IP 段只允许内网/保留或公开网段。
 
