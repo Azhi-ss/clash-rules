@@ -1,7 +1,18 @@
 # Windows 进程直连规则集（仅 Windows 生效；macOS/Linux 客户端不要引用本集合）
 # behavior: classical —— 策略由客户端 RULE-SET 行统一指定（DIRECT）
 payload:
+  # ---- 豆包输入法 / 系统设置 ----
   - PROCESS-NAME,ImeService.exe
   - PROCESS-NAME,DoubaoImeSettings.exe
   - PROCESS-NAME,SettingsLauncher.exe
   - PROCESS-NAME,UpdateWorker.exe
+  # ---- 网易 UU 远程（GameViewer，安装目录常为 ...\Netease\GameViewer 或 ...\uudesk）----
+  # 远控/端口映射是 P2P 直连，对端可能是海外 IP，必须按进程强制直连，
+  # 不能依赖 GeoIP（否则海外对端会被送进代理，导致卡顿或连不上）。
+  - PROCESS-NAME,GameViewer.exe
+  - PROCESS-NAME,GameViewerServer.exe
+  - PROCESS-NAME,GameViewerService.exe
+  - PROCESS-NAME,GameViewerHealthd.exe
+  - PROCESS-NAME,GameViewerLauncher.exe
+  - PROCESS-NAME,uuyc-mux.exe
+  - PROCESS-NAME,uuyc-cli.exe

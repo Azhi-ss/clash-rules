@@ -11,7 +11,7 @@ mihomo（Clash.Meta）内核的 `rule-provider` HTTP 规则集，规则托管在
 | 文件 | 条数 | 期望策略 | 备注 |
 |---|---|---|---|
 | `rules/direct.yaml` | 58 | `DIRECT` | 国内域名 + 内网 IP 段，跨平台 |
-| `rules/windows-direct.yaml` | 4 | `DIRECT` | Windows 进程名，**Mac/Linux 不引用** |
+| `rules/windows-direct.yaml` | 11 | `DIRECT` | Windows 进程名（输入法/系统/UU远程），**Mac/Linux 不引用** |
 | `rules/google.yaml` | 4 | Google 组 | |
 | `rules/proxy.yaml` | 8 | 总代理组 | HF/Docker/Cursor/GitHub 等 |
 | `rules/steam.yaml` | 17 | Steam 组 | 商店/社区/下载/游戏服务器/CDN |
@@ -40,7 +40,7 @@ mihomo（Clash.Meta）内核的 `rule-provider` HTTP 规则集，规则托管在
 
 **④ 验证（全部通过才算完成）**
 - `GET /providers/rules`：有 `online-direct/windows/google/proxy/steam`（Mac/Linux 无 windows），
-  `vehicleType=HTTP`、`behavior=Classical`，ruleCount 为 **58/4/4/8/17**（顺序 direct/windows/google/proxy/steam）。
+  `vehicleType=HTTP`、`behavior=Classical`，ruleCount 为 **58/11/4/8/17**（顺序 direct/windows/google/proxy/steam）。
 - `GET /rules` 前 5 条为 `RuleSet online-*`。
 - 实测：`google.com` 命中 `RULE-SET,online-google` 走代理；`www.baidu.com` 直连。
 - 配置校验：`verge-mihomo(-alpha).exe -t -d <根目录> -f <根目录>/clash-verge.yaml` → `test is successful`。
