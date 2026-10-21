@@ -111,6 +111,8 @@ clients/
 同理处理**——把联网 exe 用 `PROCESS-NAME` 加进 `windows-direct.yaml`，主控端和被控端都要覆盖；
 改完重启该软件（规则只对新连接生效）。
 
+> 🤖 给 Agent：遇到 UU 远程 / 同类远控直连需求，读按需技能 [`skills/uu-remote/SKILL.md`](skills/uu-remote/SKILL.md)（含已验证进程名、探测与验证步骤）。
+
 ## 新设备接入（Clash Verge Rev，约 1 分钟）
 
 > 🤖 **AI Agent 注意**：本节是给人看的简要步骤；接入任务请直接以 [`AGENTS.md`](AGENTS.md) 为准（含探测、验证、排错）。
